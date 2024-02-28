@@ -27,27 +27,27 @@ class Printer():
         self.COMMPORT = "/dev/ttyUSB0"
         self.COMMBAUDRATE = 115200
 
-        self.SER = serial.Serial(self.COMMPORT, self.COMMBAUDRATE)
+        self.SERIAL = serial.Serial(self.COMMPORT, self.COMMBAUDRATE)
 
         # Determine printer capabilities (e.g. laser unit, ARC_SUPPORT, DIRECT_STEPPING, FWRETRACT, NOZZLE_CLEAN_FEATURE implemented gcode commands)
         # M115 gcode cmd? https://marlinfw.org/docs/gcode/M115.html
 
         print("\n\n")
 
-        self.SER.write(str.encode("M115\r\n"))                                      # Return firmware information
+        self.SERIAL.write(str.encode("M115\r\n"))                                   # Return firmware information
         print("Sent M115")
 
-        serRead = ""
-        while "ok" not in serRead:                                                  # Read serial output until M115 is done returning data.
-            read = self.SER.read()
-            serRead += read.decode()
-            serRead # Convert bytes to string
+        serialRead = ""
+        while "ok" not in serialRead:                                               # Read serial output until M115 is done returning data.
+            read = self.SERIAL.read()
+            serialRead += read.decode()
+            serialRead # Convert bytes to string
             f = open('M115_Return.txt', 'w')
-        f.write(serRead)
+        f.write(serialRead)
         
-        print(serRead)
+        print(serialRead)
 
-        # Set the following using M115 as well?
+        # Set the following using M115
 
         self.FIRMWARE = ""
         self.FIRMWARE_VER = ""
