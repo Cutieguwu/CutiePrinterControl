@@ -1,4 +1,4 @@
-#! ~/.pyenv/versions/3.11.6/bin/python
+#!~/.pyenv/versions/3.11.6/bin/python
 
 # Copyright (c) 2024 Cutieguwu | Olivia Brooks
 #
@@ -12,7 +12,7 @@
 # @Last Modified: 29 Feb, 2024
 # @Last Modified by: Cutieguwu | Olivia Brooks
 
-import serial
+import serial, platform, os
 
 class Printer():
     """
@@ -24,22 +24,28 @@ class Printer():
         Initial variable setup and configuration for Printer class.
         """
 
-        self.COMMPORT = "/dev/ttyUSB0"
-        self.COMMBAUDRATE = 115200
-
-        #self.SERIAL = serial.Serial(self.COMMPORT, self.COMMBAUDRATE)
-
+        if platform.system() == "Windows":
+            self.CONNECTED_HOST = platform.uname().node
+        else:
+            self.CONNECTED_HOST = os.uname()[1]
+        
         print("\n\n")
 
-        #self.SERIAL.write(str.encode("M115\r\n"))                                   # Return firmware information
-        print("Sent M115")
+        if self.CONNECTED_HOST == "Manjuwu-Linux":                                  # If on connected testing system, use serial comm instead of placeholder for testing.
+            self.COMMPORT = "/dev/ttyUSB0"
+            self.COMMBAUDRATE = 115200
 
-        serialRead = ""
-        serialRead = "FIRMWARE_NAME:Marlin 2.0.8.26F4 (Jan  9 2023 12:40:40) SOURCE_CODE_URL:github.com/MarlinFirmware/Marlin PROTOCOL_VERSION:1.0 MACHINE_TYPE:Ender-3 S1 Pro EXTRUDER_COUNT:1 UUID:cede2a2f-41a2-4748-9b12-c55c62f367ff\nCap:SERIAL_XON_XOFF:0\nCap:BINARY_FILE_TRANSFER:0\nCap:IS_PLR:0\nCap:EEPROM:1\nCap:VOLUMETRIC:1\nCap:AUTOREPORT_POS:0\nCap:AUTOREPORT_TEMP:1\nCap:PROGRESS:0\nCap:PRINT_JOB:1\nCap:AUTOLEVEL:1\nCap:RUNOUT:1\nCap:Z_PROBE:1\nCap:LEVELING_DATA:1\nCap:BUILD_PERCENT:0\nCap:SOFTWARE_POWER:0\nCap:TOGGLE_LIGHTS:0\nCap:CASE_LIGHT_BRIGHTNESS:0\nCap:EMERGENCY_PARSER:0\nCap:HOST_ACTION_COMMANDS:0\nCap:PROMPT_SUPPORT:0\nCap:SDCARD:1\nCap:REPEAT:0\nCap:SD_WRITE:1\nCap:AUTOREPORT_SD_STATUS:0\nCap:LONG_FILENAME:1\nCap:THERMAL_PROTECTION:1\nCap:MOTION_MODES:0\nCap:ARCS:1\nCap:BABYSTEPPING:1\nCap:CHAMBER_TEMPERATURE:0\nCap:COOLER_TEMPERATURE:0\nCap:MEATPACK:0\nok"
-        
-        while "ok" not in str(serialRead):                                          # Read serial output until M115 is done returning data.
-            read = self.SERIAL.read()
-            serialRead += read.decode()
+            self.SERIAL = serial.Serial(self.COMMPORT, self.COMMBAUDRATE)
+
+            self.SERIAL.write(str.encode("M115\r\n"))                               # Return firmware information
+            print("Sent M115")
+
+            serialRead = ""
+            while "ok" not in str(serialRead):                                      # Read serial output until M115 is done returning data.
+                read = self.SERIAL.read()
+                serialRead += read.decode()
+        else:
+            serialRead = "FIRMWARE_NAME:Marlin 2.0.8.26F4 (Jan  9 2023 12:40:40) SOURCE_CODE_URL:github.com/MarlinFirmware/Marlin PROTOCOL_VERSION:1.0 MACHINE_TYPE:Ender-3 S1 Pro EXTRUDER_COUNT:1 UUID:cede2a2f-41a2-4748-9b12-c55c62f367ff\nCap:SERIAL_XON_XOFF:0\nCap:BINARY_FILE_TRANSFER:0\nCap:IS_PLR:0\nCap:EEPROM:1\nCap:VOLUMETRIC:1\nCap:AUTOREPORT_POS:0\nCap:AUTOREPORT_TEMP:1\nCap:PROGRESS:0\nCap:PRINT_JOB:1\nCap:AUTOLEVEL:1\nCap:RUNOUT:1\nCap:Z_PROBE:1\nCap:LEVELING_DATA:1\nCap:BUILD_PERCENT:0\nCap:SOFTWARE_POWER:0\nCap:TOGGLE_LIGHTS:0\nCap:CASE_LIGHT_BRIGHTNESS:0\nCap:EMERGENCY_PARSER:0\nCap:HOST_ACTION_COMMANDS:0\nCap:PROMPT_SUPPORT:0\nCap:SDCARD:1\nCap:REPEAT:0\nCap:SD_WRITE:1\nCap:AUTOREPORT_SD_STATUS:0\nCap:LONG_FILENAME:1\nCap:THERMAL_PROTECTION:1\nCap:MOTION_MODES:0\nCap:ARCS:1\nCap:BABYSTEPPING:1\nCap:CHAMBER_TEMPERATURE:0\nCap:COOLER_TEMPERATURE:0\nCap:MEATPACK:0\nok"
         
         print("Printer returned:", serialRead)
 
@@ -71,7 +77,8 @@ class Printer():
             elif serialReadFirstline[i] == ":"  and serialReadFirstline[i - 1].isnumeric() == False:    # If end of keyword, add keyword and reset currentString
                 KEYWORDS.append(currentString)
                 currentString = ""
-            else: currentString = ""                                                                    # Characters were not part of a keyword.
+            else:
+                currentString = ""                                                                      # Characters were not part of a keyword.
 
         positionsStart = []
         positionsEnd = []
