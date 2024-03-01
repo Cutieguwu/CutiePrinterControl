@@ -1,3 +1,17 @@
+#!~/.pyenv/versions/3.11.6/bin/python
+
+# Copyright (c) 2024 Cutieguwu | Olivia Brooks
+#
+# -*- coding:utf-8 -*-
+# @Title: CutiePrinterControl/JsonLibBuilder
+# @Author: Cutieguwu | Olivia Brooks
+# @Description: Script to build command json files.
+#
+# @Script: TESTING/json_lib_builder.py
+# @Date Created: 29 Feb, 2024
+# @Last Modified: 29 Feb, 2024
+# @Last Modified by: Cutieguwu | Olivia Brooks
+
 import json
 
 data = {}

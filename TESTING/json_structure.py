@@ -1,3 +1,17 @@
+#!~/.pyenv/versions/3.11.6/bin/python
+
+# Copyright (c) 2024 Cutieguwu | Olivia Brooks
+#
+# -*- coding:utf-8 -*-
+# @Title: CutiePrinterControl/JsonStructure
+# @Author: Cutieguwu | Olivia Brooks
+# @Description: Script to work on the layout and structuring of Marlin_commands.json.
+#
+# @Script: TESTING/json_structure.py
+# @Date Created: 29 Feb, 2024
+# @Last Modified: 29 Feb, 2024
+# @Last Modified by: Cutieguwu | Olivia Brooks
+
 import json
 
 dictionary = {
