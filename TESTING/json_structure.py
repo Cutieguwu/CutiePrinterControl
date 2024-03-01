@@ -397,4 +397,4 @@ dictionary = {
             }
 
 with open("./TESTING/test_json.json", "w") as outfile:
-    json.dump(dictionary, outfile)
+    json.dump(dictionary, outfile, indent=4)

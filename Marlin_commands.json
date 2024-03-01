@@ -344,7 +344,7 @@
                             "isCondition": "True",
                             "Type": "Time",
                             "Units": "ms",
-                            "Description": "Amount of time to dwell (ms).",
+                            "Description": "Amount of time to dwell (ms)."
                         },
                     "R":
                         {
