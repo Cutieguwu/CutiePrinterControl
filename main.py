@@ -9,7 +9,7 @@
 #
 # @Script: main.py
 # @Date Created: 26 Feb, 2024
-# @Last Modified: 29 Feb, 2024
+# @Last Modified: 2 Mar, 2024
 # @Last Modified by: Cutieguwu | Olivia Brooks
 
 import serial, platform, os
@@ -131,18 +131,54 @@ class Printer():
         self.PRINTER_CAPABILITIES.split("Cap:")                                     # Split back into list, clearing "Cap:"
 
         print(f'Fetched the following:\n\nPrinter.FIRMWARE_NAME={self.FIRMWARE_NAME}\nPrinter.FIRMWARE={self.FIRMWARE}\nPrinter.FIRMWARE_VER={self.FIRMWARE_VER}\nPrinter.SOURCE_CODE_URL={self.SOURCE_CODE_URL}\nPrinter.PROTOCOL_VER={self.PROTOCOL_VER}\nPrinter.MACHINE_TYPE={self.MACHINE_TYPE}\nPrinter.EXTRUDER_COUNT={self.EXTRUDER_COUNT}\nPrinter.UUID={self.UUID}')
+    
+    def parse_gcode(self, sourceFilePath):
+        gcode = []
 
+        try:
+            with open(sourceFilePath, "r") as gcodeFile:                                # open gcode file for reading, close when done.
+                for line in gcodeFile:
+                    command = ""
 
-class Gcode(Printer):
-    """
-    Determines compatible gcode commands. Takes features list from Printer class.
-    """
+                    for character in line:
+                        if character != ";":                                            # If character isn't the start of a comment, add it to the command string.
+                            command = command + character
+                        else:                                                           # Stop reading, as remaining characters will be comments.
+                            break
 
-    def __init__(self):
-        """
-        Initial variable setup and configuration for gcode commands.
-        """
-        pass
+                    if command != "":                                                   # If not a formatting space or fully commented line, add it to the commands list.
+                        gcode.append(command.strip())                                   # .strip method to clear leading and trailing whitespace and newlines.
+        except FileNotFoundError:
+            raise SystemExit
         
-printer = Printer()
-gcode = Gcode()
+        print(gcode)
+        return gcode
+
+    def print(self, sourceFilePath=""):
+        if sourceFilePath != "":
+            gcode = self.parse_gcode(sourceFilePath)
+            self.SERIAL.write(str.encode(f'{gcode[0]}\r\n'))
+            print("Sent first command")
+            serialRead = ""
+            while "ok" not in str(serialRead):                                      # Read serial output until M115 is done returning data.
+                read = self.SERIAL.read()
+                serialRead += read.decode()
+            print("Printer returned:", serialRead)
+
+            for i in range(1, len(gcode)):
+                serialRead = ""
+
+                while "ok" not in str(serialRead):                                      # Read serial output until M115 is done returning data.
+                    read = self.SERIAL.read()
+                    serialRead += read.decode()
+
+                if "Unknown command" in serialRead:
+                    print("Error: Printer returned unknown command signal")
+                else:
+                    self.SERIAL.write(str.encode(f'{gcode[i]}\r\n'))
+                    print("Sent:", gcode[i])
+        else:
+            print("No source file was given, exiting.")
+        
+printer = Printer()                                                                 # Initialize the printer.
+printer.print(input("Enter source gcode file path: "))                              # Print a file.
