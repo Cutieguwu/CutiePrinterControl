@@ -17,7 +17,7 @@ This project's entire purpose is to facilitate 3D printing via a computer to a p
 
 This project is currently just a proof-of-concept. At the end, v1 should be able to print gcode over a serial connection and nothing more. Looking forward if the project isn't abandoned, the project has the following goals, including the initial goals for v1:
 
-##### v1 - Basic Controller
+#### v1 - Basic Controller
 *Rose*
 
 - [x] Printer information detection
@@ -32,7 +32,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Automatic serial printer connection detection
 - [ ] Version documentation
 
-##### v2 - Basic Automations
+#### v2 - Basic Automations
 *Jack*
 
 - [ ] Basic Gcode library for Marlin
@@ -47,7 +47,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Completion time estimate
 - [ ] Version documentation
 
-##### v3 - Graphical Interface
+#### v3 - Graphical Interface
 *Donna*
 
 - [ ] Printer information panel
@@ -75,7 +75,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Gcode library panel
 - [ ] Version Documentation
 
-##### v4 - Multi Printer Control
+#### v4 - Multi Printer Control
 *Martha*
 
 - [ ] Support controlling multiple printers simultaneously
@@ -89,7 +89,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Non-development logging systems
 - [ ] Version documentation
 
-##### v5 - Group Printer Control
+#### v5 - Group Printer Control
 *Amy*
 
 - [ ] Printer grouping wizard
