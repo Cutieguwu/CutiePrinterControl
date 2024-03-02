@@ -17,11 +17,11 @@ This project's entire purpose is to facilitate 3D printing via a computer to a p
 
 This project is currently just a proof-of-concept. At the end, v1 should be able to print gcode over a serial connection and nothing more. Looking forward if the project isn't abandoned, the project has the following goals, including the initial goals for v1:
 
-##### v1 - 
+##### v1 - Basic Controller
 *Rose*
 
 - [x] Printer information detection
-- [x] Printer capability detection
+- [ ] Printer capability detection
 - [ ] Parse gcode
 - [ ] Print using a gcode file
 - [ ] Version documentation
@@ -44,6 +44,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 
 - [ ] Execute basic operation sequences by user request for testing purposes
 - [ ] Progress bar
+- [ ] Completion time estimate
 - [ ] Version documentation
 
 ##### v3 - Graphical Interface
@@ -57,7 +58,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 ###### v3.1
 *Noble*
 
-- [ ] Asyncronous serial read
+- [ ] Asynchronous serial read
 - [ ] Printer serial communication panel
 - [ ] Save machine print state to resume printing after a shutdown
 - [ ] Version documentation
@@ -88,7 +89,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Non-development logging systems
 - [ ] Version documentation
 
-##### v5 - Group printer control
+##### v5 - Group Printer Control
 *Amy*
 
 - [ ] Printer grouping wizard
@@ -122,7 +123,7 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 - [ ] Allow setting a number of copies of each item in print queue
 - [ ] Version Documentation
 
-###### v5.6
+###### v5.5
 *Song*
 
 - [ ] Add mass monitoring panel to view all printer's states, progress and current jobs.
@@ -130,9 +131,9 @@ This project is currently just a proof-of-concept. At the end, v1 should be able
 
 ##### Other
 
-- [ ] French/Multi language support w/ system autodetection
+- [ ] French/Multi language support w/ system language autodetection
 - [ ] Complete Marlin command support
-- [ ] Error report system
+- [ ] Error reporting system
 
 ---
 
